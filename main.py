@@ -1,8 +1,6 @@
+import numpy as np
 from os import listdir
 from PIL import Image
-import numpy as np
-
-import random
 
 dataset_path = "dataset/"
 
@@ -39,23 +37,33 @@ classes = [
   }
 ]
 
-dataset = []
+image_width = 360
+image_height = 360
+
+xDataset = []
+yDataset = []
 
 def addImagesToClasses():
   for a_class in classes:
     images_paths = f"{dataset_path}{a_class['path']}"
 
-    for image_name in listdir(images_paths):
+    for image_name in listdir(images_paths)[:5]:
       image_path = f"{images_paths}/{image_name}"
 
       image = Image.open(image_path)
 
       image = image.resize((360,360))
 
-      # image.save(f"images/{random.randrange(0, 3000, 1)}.jpg")
-
       image_array = np.asarray(image)
 
-      dataset.append([image_array.tolist(), a_class["id"]])
+      image_array = image_array.reshape(-1, 9)
+
+      xDataset.append(image_array)
+      yDataset.append(a_class["id"])
+
+def trainModel():
+  print(xDataset)
+  print(yDataset)
 
 addImagesToClasses()
+trainModel()
