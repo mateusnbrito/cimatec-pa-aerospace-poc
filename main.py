@@ -52,11 +52,7 @@ def addImagesToClasses():
 
       image = Image.open(image_path)
 
-      image = image.resize((360,360))
-
       image_array = np.asarray(image)
-
-      image_array = image_array.reshape(-1, 9)
 
       xDataset.append(image_array)
       yDataset.append(a_class["id"])
