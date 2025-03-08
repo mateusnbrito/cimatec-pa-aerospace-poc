@@ -1,0 +1,1 @@
+Desenvolver uma prova de conceito de classificador de multiplas classes relacionada a temática "aeroespacial"
