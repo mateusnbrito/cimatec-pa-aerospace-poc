@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
+import torch.optim as optim
 import torchvision.transforms as transforms
 import timm
-import torch.optim as optim
 import matplotlib.pyplot as plt
 from os import listdir
 from pathlib import Path
@@ -17,7 +17,7 @@ TRAIN_IMAGES_PATH = "dataset/train"
 TEST_IMAGES_PATH = "dataset/test"
 PREDICTIONS_IMAGE_PATH = "imagens-de-teste"
 BATCH_SIZE = 32
-EPOCHS = 1
+EPOCHS = 5
 NUMBER_OF_CLASSES = 6
 ENET_OUT_SIZE = 1280
 IMAGE_SIZE = 128
