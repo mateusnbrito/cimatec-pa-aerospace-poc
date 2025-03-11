@@ -26,7 +26,7 @@ optimizer = None
 train_loader = None
 classes = None
 
-class PlayingCardDataset(Dataset):
+class ImageDataset(Dataset):
   def __init__(self, train_images_dir, transform=None):
     self.data = ImageFolder(train_images_dir, transform=transform)
 
@@ -40,9 +40,9 @@ class PlayingCardDataset(Dataset):
   def classes(self):
     return self.data.classes
 
-class SimpleCardClassifer(nn.Module):
+class ImageClassifer(nn.Module):
   def __init__(self, num_classes=NUMBER_OF_CLASSES):
-    super(SimpleCardClassifer, self).__init__()
+    super(ImageClassifer, self).__init__()
 
     self.base_model = timm.create_model("efficientnet_b0", pretrained=True)
     self.features = nn.Sequential(*list(self.base_model.children())[:-1])
@@ -119,15 +119,15 @@ def main():
     transforms.ToTensor(),
   ])
 
-  dataset = PlayingCardDataset(TRAIN_IMAGES_PATH, image_transformer)
+  dataset = ImageDataset(TRAIN_IMAGES_PATH, image_transformer)
   dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
-  model = SimpleCardClassifer(num_classes=NUMBER_OF_CLASSES)
+  model = ImageClassifer(num_classes=NUMBER_OF_CLASSES)
   criterion = nn.CrossEntropyLoss()
   optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
   classes = {v: k for k, v in ImageFolder(TRAIN_IMAGES_PATH).class_to_idx.items()}
 
-  train_dataset = PlayingCardDataset(TRAIN_IMAGES_PATH, transform=image_transformer)
-  test_dataset = PlayingCardDataset(TEST_IMAGES_PATH, transform=image_transformer)
+  train_dataset = ImageDataset(TRAIN_IMAGES_PATH, transform=image_transformer)
+  test_dataset = ImageDataset(TEST_IMAGES_PATH, transform=image_transformer)
 
   train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
   test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False)
